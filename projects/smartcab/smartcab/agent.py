@@ -1,7 +1,10 @@
-import random
-from environment import Agent, Environment
-from planner import RoutePlanner
-from simulator import Simulator
+#!/usr/bin/pythoon3
+
+# pylint: disable=C0103,C0111,C0301
+
+from .environment import Agent, Environment
+from .planner import RoutePlanner
+from .simulator import Simulator
 
 class LearningAgent(Agent):
     """An agent that learns to drive in the smartcab world."""
@@ -11,6 +14,7 @@ class LearningAgent(Agent):
         self.color = 'red'  # override color
         self.planner = RoutePlanner(self.env, self)  # simple route planner to get next_waypoint
         # TODO: Initialize any additional variables here
+        self.next_waypoint = None
 
     def reset(self, destination=None):
         self.planner.route_to(destination)
@@ -23,7 +27,7 @@ class LearningAgent(Agent):
         deadline = self.env.get_deadline(self)
 
         # TODO: Update state
-        
+
         # TODO: Select action according to your policy
         action = None
 
@@ -32,7 +36,7 @@ class LearningAgent(Agent):
 
         # TODO: Learn policy based on state, action, reward
 
-        print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}".format(deadline, inputs, action, reward)  # [debug]
+        print("LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}".format(deadline, inputs, action, reward))  # [debug]
 
 
 def run():

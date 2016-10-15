@@ -1,8 +1,11 @@
-import time
+#!/usr/bin/python3
+
+# pylint: disable=C0103,C0111,C0301
+
 import random
 from collections import OrderedDict
 
-from simulator import Simulator
+from .simulator import Simulator
 
 class TrafficLight(object):
     """A traffic light that switches periodically."""
@@ -33,7 +36,7 @@ class Environment(object):
 
     def __init__(self, num_dummies=3):
         self.num_dummies = num_dummies  # no. of dummy agents
-        
+
         # Initialize simulation variables
         self.done = False
         self.t = 0
@@ -46,8 +49,8 @@ class Environment(object):
         self.block_size = 100
         self.intersections = OrderedDict()
         self.roads = []
-        for x in xrange(self.bounds[0], self.bounds[2] + 1):
-            for y in xrange(self.bounds[1], self.bounds[3] + 1):
+        for x in range(self.bounds[0], self.bounds[2] + 1):
+            for y in range(self.bounds[1], self.bounds[3] + 1):
                 self.intersections[(x, y)] = TrafficLight()  # a traffic light at each intersection
 
         for a in self.intersections:
@@ -58,7 +61,7 @@ class Environment(object):
                     self.roads.append((a, b))
 
         # Dummy agents
-        for i in xrange(self.num_dummies):
+        for i in range(self.num_dummies):
             self.create_agent(DummyAgent)
 
         # Primary agent and associated parameters
@@ -96,7 +99,7 @@ class Environment(object):
         self.t = 0
 
         # Reset traffic lights
-        for traffic_light in self.intersections.itervalues():
+        for traffic_light in self.intersections.values():
             traffic_light.reset()
 
         # Pick a start and a destination
@@ -110,10 +113,10 @@ class Environment(object):
 
         start_heading = random.choice(self.valid_headings)
         deadline = self.compute_dist(start, destination) * 5
-        print "Environment.reset(): Trial set up with start = {}, destination = {}, deadline = {}".format(start, destination, deadline)
+        print("Environment.reset(): Trial set up with start = {}, destination = {}, deadline = {}".format(start, destination, deadline))
 
         # Initialize agent(s)
-        for agent in self.agent_states.iterkeys():
+        for agent in self.agent_states.keys():
             self.agent_states[agent] = {
                 'location': start if agent is self.primary_agent else random.choice(self.intersections.keys()),
                 'heading': start_heading if agent is self.primary_agent else random.choice(self.valid_headings),
@@ -127,14 +130,14 @@ class Environment(object):
                 self.trial_data['success'] = 0
 
     def step(self):
-        #print "Environment.step(): t = {}".format(self.t)  # [debug]
+        #print("Environment.step(): t = {}".format(self.t))  # [debug]
 
         # Update traffic lights
-        for intersection, traffic_light in self.intersections.iteritems():
+        for intersection, traffic_light in self.intersections.items():
             traffic_light.update(self.t)
 
         # Update agents
-        for agent in self.agent_states.iterkeys():
+        for agent in self.agent_states.keys():
             agent.update(self.t)
 
         if self.done:
@@ -144,10 +147,10 @@ class Environment(object):
             agent_deadline = self.agent_states[self.primary_agent]['deadline']
             if agent_deadline <= self.hard_time_limit:
                 self.done = True
-                print "Environment.step(): Primary agent hit hard time limit ({})! Trial aborted.".format(self.hard_time_limit)
+                print("Environment.step(): Primary agent hit hard time limit ({})! Trial aborted.".format(self.hard_time_limit))
             elif self.enforce_deadline and agent_deadline <= 0:
                 self.done = True
-                print "Environment.step(): Primary agent ran out of time! Trial aborted."
+                print("Environment.step(): Primary agent ran out of time! Trial aborted.")
             self.agent_states[self.primary_agent]['deadline'] = agent_deadline - 1
 
         self.t += 1
@@ -164,14 +167,14 @@ class Environment(object):
         oncoming = None
         left = None
         right = None
-        for other_agent, other_state in self.agent_states.iteritems():
+        for other_agent, other_state in self.agent_states.items():
             if agent == other_agent or location != other_state['location'] or (heading[0] == other_state['heading'][0] and heading[1] == other_state['heading'][1]):
                 continue
             other_heading = other_agent.get_next_waypoint()
             if (heading[0] * other_state['heading'][0] + heading[1] * other_state['heading'][1]) == -1:
                 if oncoming != 'left':  # we don't want to override oncoming == 'left'
                     oncoming = other_heading
-            elif (heading[1] == other_state['heading'][0] and -heading[0] == other_state['heading'][1]):
+            elif heading[1] == other_state['heading'][0] and -heading[0] == other_state['heading'][1]:
                 if right != 'forward' and right != 'left':  # we don't want to override right == 'forward or 'left'
                     right = other_heading
             else:
@@ -200,7 +203,7 @@ class Environment(object):
             if light != 'green':
                 move_okay = False
         elif action == 'left':
-            if light == 'green' and (inputs['oncoming'] == None or inputs['oncoming'] == 'left'):
+            if light == 'green' and (inputs['oncoming'] is None or inputs['oncoming'] == 'left'):
                 heading = (heading[1], -heading[0])
             else:
                 move_okay = False
@@ -233,9 +236,9 @@ class Environment(object):
                     reward += 10  # bonus
                     self.trial_data['success'] = 1
                 self.done = True
-                print "Environment.act(): Primary agent has reached destination!"  # [debug]
+                print("Environment.act(): Primary agent has reached destination!")  # [debug]
             self.status_text = "state: {}\naction: {}\nreward: {}".format(agent.get_state(), action, reward)
-            #print "Environment.act() [POST]: location: {}, heading: {}, action: {}, reward: {}".format(location, heading, action, reward)  # [debug]
+            #print("Environment.act() [POST]: location: {}, heading: {}, action: {}, reward: {}".format(location, heading, action, reward))  # [debug]
 
             # Update metrics
             self.step_data['t'] = self.t
@@ -245,11 +248,12 @@ class Environment(object):
             self.step_data['action'] = action
             self.step_data['reward'] = reward
             self.trial_data['net_reward'] += reward
-            print "Environment.act(): Step data: {}".format(self.step_data)  # [debug]
+            print("Environment.act(): Step data: {}".format(self.step_data))  # [debug]
 
         return reward
 
-    def compute_dist(self, a, b):
+    @staticmethod
+    def compute_dist(a, b):
         """L1 distance between two points."""
         return abs(b[0] - a[0]) + abs(b[1] - a[1])
 
@@ -303,5 +307,5 @@ class DummyAgent(Agent):
             action = self.next_waypoint
             self.next_waypoint = random.choice(Environment.valid_actions[1:])
         reward = self.env.act(self, action)
-        #print "DummyAgent.update(): t = {}, inputs = {}, action = {}, reward = {}".format(t, inputs, action, reward)  # [debug]
-        #print "DummyAgent.update(): next_waypoint = {}".format(self.next_waypoint)  # [debug]
+        #print("DummyAgent.update(): t = {}, inputs = {}, action = {}, reward = {}".format(t, inputs, action, reward))  # [debug]
+        #print("DummyAgent.update(): next_waypoint = {}".format(self.next_waypoint))  # [debug]

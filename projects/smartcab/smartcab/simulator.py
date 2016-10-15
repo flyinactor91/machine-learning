@@ -1,11 +1,14 @@
+#!/usr/bin/python3
+
+# pylint: disable=C0103,C0111,C0301,C0326,C0330,W0150,W0212
+
 import os
 import time
-import random
 import importlib
 
 import numpy as np
 
-from analysis import Reporter
+from .analysis import Reporter
 
 class Simulator(object):
     """Simulates agents in a dynamic smartcab environment.
@@ -29,7 +32,7 @@ class Simulator(object):
         self.env = env
         self.size = size if size is not None else ((self.env.grid_size[0] + 1) * self.env.block_size, (self.env.grid_size[1] + 1) * self.env.block_size)
         self.width, self.height = self.size
-        
+
         self.bg_color = self.colors['white']
         self.road_width = 5
         self.road_color = self.colors['black']
@@ -58,10 +61,10 @@ class Simulator(object):
                 self.paused = False
             except ImportError as e:
                 self.display = False
-                print "Simulator.__init__(): Unable to import pygame; display disabled.\n{}: {}".format(e.__class__.__name__, e)
+                print("Simulator.__init__(): Unable to import pygame; display disabled.\n{}: {}".format(e.__class__.__name__, e))
             except Exception as e:
                 self.display = False
-                print "Simulator.__init__(): Error initializing GUI objects; display disabled.\n{}: {}".format(e.__class__.__name__, e)
+                print("Simulator.__init__(): Error initializing GUI objects; display disabled.\n{}: {}".format(e.__class__.__name__, e))
 
         # Setup metrics to report
         self.live_plot = live_plot
@@ -71,8 +74,8 @@ class Simulator(object):
     def run(self, n_trials=1):
         self.quit = False
         self.rep.reset()
-        for trial in xrange(n_trials):
-            print "Simulator.run(): Trial {}".format(trial)  # [debug]
+        for trial in range(n_trials):
+            print("Simulator.run(): Trial {}".format(trial))  # [debug]
             self.env.reset()
             self.current_time = 0.0
             self.last_updated = 0.0
@@ -81,7 +84,7 @@ class Simulator(object):
                 try:
                     # Update current time
                     self.current_time = time.time() - self.start_time
-                    #print "Simulator.run(): current_time = {:.3f}".format(self.current_time)
+                    #print("Simulator.run(): current_time = {:.3f}".format(self.current_time))
 
                     # Handle GUI events
                     if self.display:
@@ -188,7 +191,7 @@ class Simulator(object):
         pause_text = "[PAUSED] Press any key to continue..."
         self.screen.blit(self.font.render(pause_text, True, self.colors['cyan'], self.bg_color), (100, self.height - 40))
         self.pygame.display.flip()
-        print pause_text  # [debug]
+        print(pause_text)  # [debug]
         while self.paused:
             for event in self.pygame.event.get():
                 if event.type == self.pygame.KEYDOWN:
