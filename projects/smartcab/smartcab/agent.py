@@ -2,9 +2,9 @@
 
 # pylint: disable=C0103,C0111,C0301
 
-from .environment import Agent, Environment
-from .planner import RoutePlanner
-from .simulator import Simulator
+from environment import Agent, Environment
+from planner import RoutePlanner
+from simulator import Simulator
 
 class LearningAgent(Agent):
     """An agent that learns to drive in the smartcab world."""

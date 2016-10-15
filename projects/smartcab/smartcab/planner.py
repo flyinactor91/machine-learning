@@ -13,7 +13,7 @@ class RoutePlanner(object):
         self.destination = None
 
     def route_to(self, destination=None):
-        self.destination = destination if destination is not None else random.choice(self.env.intersections.keys())
+        self.destination = destination if destination is not None else random.choice(list(self.env.intersections.keys()))
         print("RoutePlanner.route_to(): destination = {}".format(destination))  # [debug]
 
     def next_waypoint(self):

@@ -5,8 +5,6 @@
 import random
 from collections import OrderedDict
 
-from .simulator import Simulator
-
 class TrafficLight(object):
     """A traffic light that switches periodically."""
 
@@ -61,7 +59,7 @@ class Environment(object):
                     self.roads.append((a, b))
 
         # Dummy agents
-        for i in range(self.num_dummies):
+        for _ in range(self.num_dummies):
             self.create_agent(DummyAgent)
 
         # Primary agent and associated parameters
@@ -70,7 +68,7 @@ class Environment(object):
 
     def create_agent(self, agent_class, *args, **kwargs):
         agent = agent_class(self, *args, **kwargs)
-        self.agent_states[agent] = {'location': random.choice(self.intersections.keys()), 'heading': (0, 1)}
+        self.agent_states[agent] = {'location': random.choice(list(self.intersections.keys())), 'heading': (0, 1)}
         return agent
 
     def set_primary_agent(self, agent, enforce_deadline=False):
@@ -86,13 +84,13 @@ class Environment(object):
             traffic_light.reset()
 
         # Pick a start and a destination
-        start = random.choice(self.intersections.keys())
-        destination = random.choice(self.intersections.keys())
+        start = random.choice(list(self.intersections.keys()))
+        destination = random.choice(list(self.intersections.keys()))
 
         # Ensure starting location and destination are not too close
         while self.compute_dist(start, destination) < 4:
-            start = random.choice(self.intersections.keys())
-            destination = random.choice(self.intersections.keys())
+            start = random.choice(list(self.intersections.keys()))
+            destination = random.choice(list(self.intersections.keys()))
 
         start_heading = random.choice(self.valid_headings)
         deadline = self.compute_dist(start, destination) * 5
@@ -101,7 +99,7 @@ class Environment(object):
         # Initialize agent(s)
         for agent in self.agent_states.keys():
             self.agent_states[agent] = {
-                'location': start if agent is self.primary_agent else random.choice(self.intersections.keys()),
+                'location': start if agent is self.primary_agent else random.choice(list(self.intersections.keys())),
                 'heading': start_heading if agent is self.primary_agent else random.choice(self.valid_headings),
                 'destination': destination if agent is self.primary_agent else None,
                 'deadline': deadline if agent is self.primary_agent else None}
