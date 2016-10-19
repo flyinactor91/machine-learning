@@ -3,7 +3,7 @@
 
 ### Install
 
-This project requires **Python 2.7** with the [pygame](https://www.pygame.org/wiki/GettingStarted
+This project requires **Python 3** with the [pygame](https://www.pygame.org/wiki/GettingStarted
 ) library installed
 
 ### Code
@@ -12,9 +12,8 @@ Template code is provided in the `smartcab/agent.py` python file. Additional sup
 
 ### Run
 
-In a terminal or command window, navigate to the top-level project directory `smartcab/` (that contains this README) and run one of the following commands:
+In a terminal or command window, navigate to the top-level project directory `smartcab/` (that contains this README) and run the following command:
 
-```python smartcab/agent.py```  
-```python -m smartcab.agent```
+```python smartcab/agent.py```
 
 This will run the `agent.py` file and execute your agent code.
