@@ -117,7 +117,7 @@ class Simulator(object):
         for road in self.env.roads:
             self.pygame.draw.line(self.screen, self.road_color, (road[0][0] * self.env.block_size, road[0][1] * self.env.block_size), (road[1][0] * self.env.block_size, road[1][1] * self.env.block_size), self.road_width)
 
-        for intersection, traffic_light in self.env.intersections.iteritems():
+        for intersection, traffic_light in self.env.intersections.items():
             self.pygame.draw.circle(self.screen, self.road_color, (intersection[0] * self.env.block_size, intersection[1] * self.env.block_size), 10)
             if traffic_light.state:  # North-South is open
                 self.pygame.draw.line(self.screen, self.colors['green'],
@@ -129,7 +129,7 @@ class Simulator(object):
                     (intersection[0] * self.env.block_size + 15, intersection[1] * self.env.block_size), self.road_width)
 
         # * Dynamic elements
-        for agent, state in self.env.agent_states.iteritems():
+        for agent, state in self.env.agent_states.items():
             # Compute precise agent location here (back from the intersection some)
             agent_offset = (2 * state['heading'][0] * self.agent_circle_radius, 2 * state['heading'][1] * self.agent_circle_radius)
             agent_pos = (state['location'][0] * self.env.block_size - agent_offset[0], state['location'][1] * self.env.block_size - agent_offset[1])
