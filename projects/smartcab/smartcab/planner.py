@@ -13,14 +13,9 @@ class RoutePlanner(object):
         self.destination = None
 
     def route_to(self, destination=None):
-<<<<<<< HEAD
-        self.destination = destination if destination is not None else random.choice(list(self.env.intersections.keys()))
-        print("RoutePlanner.route_to(): destination = {}".format(destination))  # [debug]
-=======
         """ Select the destination if one is provided, otherwise choose a random intersection. """
 
         self.destination = destination if destination is not None else random.choice(self.env.intersections.keys())
->>>>>>> udacity/master
 
     def next_waypoint(self):
         """ Creates the next waypoint based on current heading, location,
@@ -43,8 +38,8 @@ class RoutePlanner(object):
         # First check if destination is at location
         if dx == 0 and dy == 0:
             return None
-        
-        # Next check if destination is cardinally East or West of location    
+
+        # Next check if destination is cardinally East or West of location
         elif dx != 0:
 
             if dx * heading[0] > 0:  # Heading the correct East or West direction

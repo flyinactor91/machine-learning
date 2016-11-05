@@ -11,13 +11,13 @@ In the not-so-distant future, taxicab companies across the United States no long
 ## Software Requirements
 This project uses the following software and Python libraries:
 
-- [Python 2.7](https://www.python.org/download/releases/2.7/)
+- [Python 3.5](https://www.python.org/download/releases/3.5/)
 - [NumPy](http://www.numpy.org/)
 - [pandas](http://pandas.pydata.org/)
 - [matplotlib](http://matplotlib.org/)
 - [PyGame](http://pygame.org/)
 
-If you do not have Python installed yet, it is highly recommended that you install the [Anaconda](http://continuum.io/downloads) distribution of Python, which already has the above packages and more included. Make sure that you select the Python 2.7 installer and not the Python 3.x installer. `pygame` can then be installed using one of the following commands:
+If you do not have Python installed yet, it is highly recommended that you install the [Anaconda](http://continuum.io/downloads) distribution of Python, which already has the above packages and more included. Make sure that you select the Python 3.5 installer and not the Python 3.x installer. `pygame` can then be installed using one of the following commands:
 
 Mac:  `conda install -c https://conda.anaconda.org/quasiben pygame`  
 Windows: `conda install -c https://conda.anaconda.org/tlatorre pygame`  
@@ -63,10 +63,9 @@ Finally, in `/smartcab/` are the following four files:
   - `simulation.py`: This Python file creates the simulation and graphical user interface. 
 
 ### Running the Code
-In a terminal or command window, navigate to the top-level project directory `smartcab/` (that contains the two project directories) and run one of the following commands:
+In a terminal or command window, navigate to the top-level project directory `smartcab/` (that contains the two project directories) and run the following command:
 
-`python smartcab/agent.py` or  
-`python -m smartcab.agent`
+`python smartcab/agent.py`
 
 This will run the `agent.py` file and execute your implemented agent code into the environment. Additionally, use the command `jupyter notebook smartcab.ipynb` from this same directory to open up a browser window or tab to work with your analysis notebook. Alternatively, you can use the command `jupyter notebook` or `ipython notebook` and navigate to the notebook file in the browser window that opens. Follow the instructions in the notebook and answer each question presented to successfully complete the implementation necessary for your `agent.py` agent file. A **README** file has also been provided with the project files which may contain additional necessary information or instruction for the project.
 

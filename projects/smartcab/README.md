@@ -1,6 +1,5 @@
-# Machine Learning Engineer Nanodegree
-# Reinforcement Learning
-## Project: Train a Smartcab How to Drive
+# Project 4: Reinforcement Learning
+## Train a Smartcab How to Drive
 
 ### Install
 
