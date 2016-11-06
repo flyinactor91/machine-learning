@@ -320,18 +320,18 @@ class Simulator(object):
             self.pygame.draw.line(self.screen, self.line_color, (road[0][0] * self.env.block_size, road[0][1] * self.env.block_size), (road[1][0] * self.env.block_size, road[1][1] * self.env.block_size), 2)
 
         for intersection, traffic_light in self.env.intersections.items():
-            self.pygame.draw.circle(self.screen, self.road_color, (intersection[0] * self.env.block_size, intersection[1] * self.env.block_size), self.road_width/2)
+            self.pygame.draw.circle(self.screen, self.road_color, (intersection[0] * self.env.block_size, intersection[1] * self.env.block_size), self.road_width//2)
 
             if traffic_light.state: # North-South is open
                 self.screen.blit(self._ns,
-                    self.pygame.rect.Rect(intersection[0]*self.env.block_size - self.road_width/2, intersection[1]*self.env.block_size - self.road_width/2, intersection[0]*self.env.block_size + self.road_width, intersection[1]*self.env.block_size + self.road_width/2))
-                self.pygame.draw.line(self.screen, self.stop_color, (intersection[0] * self.env.block_size - self.road_width/2, intersection[1] * self.env.block_size - self.road_width/2), (intersection[0] * self.env.block_size - self.road_width/2, intersection[1] * self.env.block_size + self.road_width/2), 2)
-                self.pygame.draw.line(self.screen, self.stop_color, (intersection[0] * self.env.block_size + self.road_width/2 + 1, intersection[1] * self.env.block_size - self.road_width/2), (intersection[0] * self.env.block_size + self.road_width/2 + 1, intersection[1] * self.env.block_size + self.road_width/2), 2)
+                    self.pygame.rect.Rect(intersection[0]*self.env.block_size - self.road_width//2, intersection[1]*self.env.block_size - self.road_width//2, intersection[0]*self.env.block_size + self.road_width, intersection[1]*self.env.block_size + self.road_width//2))
+                self.pygame.draw.line(self.screen, self.stop_color, (intersection[0] * self.env.block_size - self.road_width//2, intersection[1] * self.env.block_size - self.road_width//2), (intersection[0] * self.env.block_size - self.road_width//2, intersection[1] * self.env.block_size + self.road_width//2), 2)
+                self.pygame.draw.line(self.screen, self.stop_color, (intersection[0] * self.env.block_size + self.road_width//2 + 1, intersection[1] * self.env.block_size - self.road_width//2), (intersection[0] * self.env.block_size + self.road_width//2 + 1, intersection[1] * self.env.block_size + self.road_width//2), 2)
             else:
                 self.screen.blit(self._ew,
-                    self.pygame.rect.Rect(intersection[0]*self.env.block_size - self.road_width/2, intersection[1]*self.env.block_size - self.road_width/2, intersection[0]*self.env.block_size + self.road_width, intersection[1]*self.env.block_size + self.road_width/2))
-                self.pygame.draw.line(self.screen, self.stop_color, (intersection[0] * self.env.block_size - self.road_width/2, intersection[1] * self.env.block_size - self.road_width/2), (intersection[0] * self.env.block_size + self.road_width/2, intersection[1] * self.env.block_size - self.road_width/2), 2)
-                self.pygame.draw.line(self.screen, self.stop_color, (intersection[0] * self.env.block_size + self.road_width/2, intersection[1] * self.env.block_size + self.road_width/2 + 1), (intersection[0] * self.env.block_size - self.road_width/2, intersection[1] * self.env.block_size + self.road_width/2 + 1), 2)
+                    self.pygame.rect.Rect(intersection[0]*self.env.block_size - self.road_width//2, intersection[1]*self.env.block_size - self.road_width//2, intersection[0]*self.env.block_size + self.road_width, intersection[1]*self.env.block_size + self.road_width//2))
+                self.pygame.draw.line(self.screen, self.stop_color, (intersection[0] * self.env.block_size - self.road_width//2, intersection[1] * self.env.block_size - self.road_width//2), (intersection[0] * self.env.block_size + self.road_width//2, intersection[1] * self.env.block_size - self.road_width//2), 2)
+                self.pygame.draw.line(self.screen, self.stop_color, (intersection[0] * self.env.block_size + self.road_width//2, intersection[1] * self.env.block_size + self.road_width//2 + 1), (intersection[0] * self.env.block_size - self.road_width//2, intersection[1] * self.env.block_size + self.road_width//2 + 1), 2)
 
         # * Dynamic elements
         self.font = self.pygame.font.Font(None, 20)
@@ -358,10 +358,10 @@ class Simulator(object):
 
             if state['destination'] is not None:
                 self.screen.blit(self._logo,
-                    self.pygame.rect.Rect(state['destination'][0] * self.env.block_size - self.road_width/2, \
-                        state['destination'][1]*self.env.block_size - self.road_width/2, \
-                        state['destination'][0]*self.env.block_size + self.road_width/2, \
-                        state['destination'][1]*self.env.block_size + self.road_width/2))
+                    self.pygame.rect.Rect(state['destination'][0] * self.env.block_size - self.road_width//2, \
+                        state['destination'][1]*self.env.block_size - self.road_width//2, \
+                        state['destination'][0]*self.env.block_size + self.road_width//2, \
+                        state['destination'][1]*self.env.block_size + self.road_width//2))
 
         # * Overlays
         self.font = self.pygame.font.Font(None, 50)
